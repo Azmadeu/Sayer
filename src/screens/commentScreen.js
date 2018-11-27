@@ -7,7 +7,6 @@ import { addComment, getData } from '../actions';
 
 class Footer extends Component {
   state = {
-
     comment: ''
   };
 
@@ -16,8 +15,9 @@ class Footer extends Component {
   };
 
   onPress = () => {
-    const { addComment, id } = this.props;
+    const { addComment, id, onClick } = this.props;
 
+    onClick(this.state.comment);
 
     addComment(id, this.state.comment);
 
@@ -26,6 +26,7 @@ class Footer extends Component {
   };
 
   render() {
+
     return (
       <View style={styles.inputContainer}>
         <TextInput
@@ -47,17 +48,12 @@ class Footer extends Component {
 }
 
 class SayerComment extends Component {
-  state: {
-    comments: [],
-    text: ''
+  state = {
+    comments: this.props.navigation('item').comments,
   };
 
-  onChange = text => {
-    this.setState({ text })
-  };
-
-  onPress = () => {
-    this.setState({ comments: [...this.state.comments, ] })
+  onClick = text => {
+    this.setState({ comments: [...this.state.comments, text] })
   };
 
   render() {
@@ -75,7 +71,7 @@ class SayerComment extends Component {
         <View style={styles.itemCommentContainer}>
           <ScrollView>
           {
-            item.comments.map(comment => (
+            this.state.comments.map(comment => (
               <View
                 style={styles.commentContent}
                 key={comment}
@@ -92,6 +88,7 @@ class SayerComment extends Component {
           </ScrollView>
         </View>
         <Footer
+          onClick={this.onClick}
           getData={getData}
           addComment={addComment}
           id={item.id}

@@ -35,7 +35,7 @@ class Item extends Component {
 
     return(
       <View>
-        <Swipeable rightButtons={deleteButton(item.id, deleteItem)}>
+        <Swipeable rightButtonWidth={150} rightButtons={deleteButton(item.id, deleteItem)}>
           <TouchableOpacity
             style={styles.commentsContainer}
             onPress={() => navigation.navigate(SAYER_COMMENT, { item })}
