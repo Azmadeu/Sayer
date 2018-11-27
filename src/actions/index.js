@@ -5,9 +5,10 @@ import {
   DELETE_ITEM,
 } from './types';
 
-export const getData = () => {
+export const getData = items => {
   return {
-    type: GET_DATA
+    type: GET_DATA,
+    items
   }
 };
 

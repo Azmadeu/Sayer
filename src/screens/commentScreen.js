@@ -2,25 +2,44 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { Header } from '../components/header'
 import { SAYER_HOME } from '../routes';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
+import { addComment } from '../actions';
 
-const Footer = props => {
-  return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        placeholder='Write a comment...'
-        style={styles.inputText}
-      />
-      <TouchableOpacity
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>
-          >
-        </Text>
-      </TouchableOpacity>
-    </View>
-  )
-};
+class Footer extends Component {
+  state = {
+    comment: ''
+  };
+
+  onChange = text => {
+    this.setState({ comment: text })
+  };
+
+  onPress = () => {
+    const { addComment, id } = this.props;
+
+    addComment(this.state.comment, id)
+  };
+
+  render() {
+    return (
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder='Write a comment...'
+          onChangeText={this.onChange}
+          style={styles.inputText}
+        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={this.onPress}
+        >
+          <Text style={styles.buttonText}>
+            >
+          </Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+}
 
 class SayerComment extends Component {
   render() {
@@ -54,13 +73,19 @@ class SayerComment extends Component {
           }
           </ScrollView>
         </View>
-        <Footer/>
+        <Footer
+          id={item.id}
+        />
       </View>
     );
   }
 }
 
-export default CommentScreen = connect(null, null)(SayerComment);
+const mapDispatchToProps = {
+  addComment
+};
+
+export default CommentScreen = connect(null, mapDispatchToProps)(SayerComment);
 
 const styles = StyleSheet.create({
   button: {

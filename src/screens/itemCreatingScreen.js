@@ -1,29 +1,35 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { addItem } from '../actions';
 import { Header } from '../components/header';
 import { SAYER_HOME } from '../routes';
 import { connect } from "react-redux";
 
 class SayerItemCreate extends Component {
   state = {
-    title: 'Create new item',
-    newItemTitle: ''
+    header: 'Create new item',
+    itemTitle: ''
   };
 
-  onChange = e => {
-    this.setState({ newItemTitle: e.target.value })
+  onChange = text => {
+    this.setState({ itemTitle: text })
   };
 
   onClick = () => {
+    const { addItem, navigation } = this.props;
 
+    addItem(this.state.itemTitle);
+
+    navigation.navigate(SAYER_HOME);
   };
 
   render() {
-    const { title } = this.state;
+    const { header } = this.state;
+
     return (
       <View>
         <Header
-          title={title}
+          title={header}
           navigation={this.props.navigation}
           route={SAYER_HOME}
         />
@@ -31,11 +37,11 @@ class SayerItemCreate extends Component {
           <TextInput
             placeholder='New item title...'
             style={styles.itemCreatorInput}
-            onChange={this.onChange}
+            onChangeText={this.onChange}
           />
           <TouchableOpacity
             style={styles.button}
-            onClick={this.onClick}
+            onPress={this.onClick}
           >
             <Text style={styles.buttonText}>
               >
@@ -47,11 +53,11 @@ class SayerItemCreate extends Component {
   }
 }
 
-// const mapStateToProps = state => {};
+const mapDispatchToProps = {
+  addItem
+};
 
-// const mapDispatchToProps = {};
-
-export default ItemCreatingScreen = connect(null, null)(SayerItemCreate);
+export default ItemCreatingScreen = connect(null, mapDispatchToProps)(SayerItemCreate);
 
 const styles = StyleSheet.create({
   createItemContainer: {

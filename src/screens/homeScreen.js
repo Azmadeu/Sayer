@@ -1,30 +1,53 @@
 import React, { Component } from 'react';
-import { ScrollView, View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, TouchableOpacity, Text, StyleSheet, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
-// import {  } from '../actions';
-import { Header } from '../components/header'
+import { Header } from '../components/header';
+import Swipeable from 'react-native-swipeable';
+import {
+  getData,
+  deleteItem
+} from '../actions'
 import {
   SAYER_ITEM_CREATE,
   SAYER_COMMENT
 } from '../routes'
 
-class Item extends React.Component {
+const deleteButton = (id, remove) => {
+
+  const deleteItem = () => {
+    remove(id);
+  };
+
+  return [
+    <TouchableOpacity
+      onPress={deleteItem}
+      style={styles.removeButton}
+    >
+      <Text style={styles.removeButtonText}>Delete</Text>
+    </TouchableOpacity>
+  ]
+};
+
+
+class Item extends Component {
   render() {
-    const { item, comments, navigation } = this.props;
+    const { item, comments, navigation, deleteItem } = this.props;
 
     return(
       <View>
-        <TouchableOpacity
-          style={styles.commentsContainer}
-          onPress={() => navigation.navigate(SAYER_COMMENT, { item })}
-        >
-          <Text style={styles.commentsTitle}>
-            {item.title}
-          </Text>
-          <Text style={styles.commentsNumber}>
-            {comments}
-          </Text>
-        </TouchableOpacity>
+        <Swipeable rightButtons={deleteButton(item.id, deleteItem)}>
+          <TouchableOpacity
+            style={styles.commentsContainer}
+            onPress={() => navigation.navigate(SAYER_COMMENT, { item })}
+          >
+            <Text style={styles.commentsTitle}>
+              {item.title}
+            </Text>
+            <Text style={styles.commentsNumber}>
+              {comments}
+            </Text>
+          </TouchableOpacity>
+        </Swipeable>
       </View>
     )
   }
@@ -36,10 +59,17 @@ class SayerHome extends Component {
     description: 'World\'s most used time waster',
   };
 
+  componentDidMount() {
+    AsyncStorage.getItem('items')
+      .then((resp) =>{
+        this.props.getData(JSON.parse(resp));
+      });
+  }
+
   render() {
     const { title, description } = this.state;
 
-    const { navigation, items } = this.props;
+    const { navigation, items, deleteItem } = this.props;
 
     return (
       <View style={styles.content}>
@@ -52,8 +82,9 @@ class SayerHome extends Component {
         <View style={styles.mainContent}>
           <ScrollView>
             {
-              items.map((item, i) => (
+              items.map(item => (
                 <Item
+                  deleteItem={deleteItem}
                   key={item.id}
                   item={item}
                   comments={item.comments.length}
@@ -76,17 +107,17 @@ class SayerHome extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    items: state.itemsData
-  };
-};
-
-// const mapDispatchToProps = {};
-
-export default HomeScreen = connect(mapStateToProps, null)(SayerHome);
-
 const styles = StyleSheet.create({
+  removeButton: {
+    height: '100%',
+    paddingLeft: 10,
+    justifyContent: 'center',
+    backgroundColor: '#ff1948',
+  },
+  removeButtonText: {
+    fontSize: 24,
+    color: '#fff'
+  },
   addButton: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -115,7 +146,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     fontSize: 18,
     textAlign: 'left',
-    width: '80%',
+    width: '78%',
     color: '#44359D',
   },
   commentsNumber: {
@@ -149,3 +180,17 @@ const styles = StyleSheet.create({
     elevation: 2,
   }
 });
+
+const mapStateToProps = (state) => {
+  return {
+    items: state.itemsData
+  };
+};
+
+const mapDispatchToProps = {
+  getData,
+  deleteItem
+};
+
+export default HomeScreen = connect(mapStateToProps, mapDispatchToProps)(SayerHome);
+
