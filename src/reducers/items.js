@@ -10,7 +10,7 @@ import {
 const initialState = [
   {
     id: generateId(),
-    title: 'First item for testing App',
+    title: 'First item for testing App First item for testing App First item for testing App',
     comments: [
       'My first comment!',
       'My second comment, lol:D'
@@ -21,7 +21,14 @@ const initialState = [
     title: 'Second item for testing App',
     comments: [
       'My first comment for second item!',
-      'My second comment for second item, lol:D'
+      'My second comment for second item, lol:d'
+    ]
+  },
+  {
+    id: generateId(),
+    title: 'item for testing',
+    comments: [
+      'My first comment for second item!',
     ]
   },
 ];

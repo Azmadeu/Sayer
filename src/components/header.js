@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   mainTitle: {
+    width: '60%',
     color: '#fff',
     marginLeft: 15,
     fontSize: 40
@@ -64,6 +65,7 @@ const styles = StyleSheet.create({
     marginLeft: 15
   },
   header: {
+    width: '100%',
     height: 110,
     flexDirection: 'row',
     backgroundColor: '#2a006a',
@@ -76,9 +78,11 @@ const styles = StyleSheet.create({
     paddingBottom: 15
   },
   text: {
+    width: '95%',
+    flexWrap: 'wrap',
     color: '#fff',
     marginLeft: 15,
-    fontSize: 28
+    fontSize: 23
   },
   button: {
     paddingBottom: 12,

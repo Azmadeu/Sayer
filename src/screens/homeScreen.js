@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 // import {  } from '../actions';
 import { Header } from '../components/header'
@@ -10,13 +10,13 @@ import {
 
 class Item extends React.Component {
   render() {
-    const { item, comments } = this.props;
+    const { item, comments, navigation } = this.props;
 
     return(
       <View>
         <TouchableOpacity
           style={styles.commentsContainer}
-          onPress={() => navigation.navigate(SAYER_COMMENT)}
+          onPress={() => navigation.navigate(SAYER_COMMENT, { item })}
         >
           <Text style={styles.commentsTitle}>
             {item.title}
@@ -42,31 +42,35 @@ class SayerHome extends Component {
     const { navigation, items } = this.props;
 
     return (
-      <View>
+      <View style={styles.content}>
         <Header
           navigation={navigation}
           route={SAYER_ITEM_CREATE}
           title={title}
           description={description}
         />
-        {
-          items.map(item => (
-            <Item
-              key={item.id}
-              item={item}
-              comments={item.comments.length}
-              navigation={navigation}
-            />
-          ))
-        }
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => navigation.navigate(SAYER_ITEM_CREATE)}
-        >
-          <Text style={styles.addButtonText}>
-            +
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.mainContent}>
+          <ScrollView>
+            {
+              items.map((item, i) => (
+                <Item
+                  key={item.id}
+                  item={item}
+                  comments={item.comments.length}
+                  navigation={navigation}
+                />
+              ))
+            }
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={() => navigation.navigate(SAYER_ITEM_CREATE)}
+            >
+              <Text style={styles.addButtonText}>
+                +
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
       </View>
     );
   }
@@ -86,7 +90,8 @@ const styles = StyleSheet.create({
   addButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 15,
+    marginBottom: 45,
   },
   commentsContainer: {
     flexDirection: 'row',
@@ -96,19 +101,26 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderLeftWidth: 0,
     borderRightWidth: 0,
+    paddingBottom: 12.5,
     borderBottomColor: '#e8e8e8',
     alignItems: 'center',
   },
+  mainContent: {
+    height: '80%'
+  },
+  content: {
+    height: '100%'
+  },
   commentsTitle: {
     marginLeft: 15,
+    fontSize: 18,
     textAlign: 'left',
     width: '80%',
-    fontSize: 22,
-    color: '#44059D',
+    color: '#44759D',
   },
   commentsNumber: {
     textAlign: 'right',
-    fontSize: 22,
+    fontSize: 24,
     color: '#fff',
     marginLeft: 15,
     paddingLeft: 10,
@@ -120,7 +132,7 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     fontSize: 55,
-    fontWeight: 'bold',
+    fontWeight:'bold',
     backgroundColor: '#ff2a6f',
     color: '#f2b6cd',
     paddingTop: 0,
