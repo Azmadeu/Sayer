@@ -18,13 +18,17 @@ class SayerItemCreate extends Component {
   onClick = () => {
     const { addItem, navigation } = this.props;
 
-    addItem(this.state.itemTitle);
+    if (this.state.itemTitle) {
+      addItem(this.state.itemTitle);
 
-    navigation.navigate(SAYER_HOME);
+      navigation.navigate(SAYER_HOME);
+
+      this.setState({ itemTitle: '' })
+    }
   };
 
   render() {
-    const { header } = this.state;
+    const { header, itemTitle } = this.state;
 
     return (
       <View>
@@ -37,6 +41,7 @@ class SayerItemCreate extends Component {
           <TextInput
             placeholder='New item title...'
             style={styles.itemCreatorInput}
+            value={this.state}
             onChangeText={this.onChange}
           />
           <TouchableOpacity

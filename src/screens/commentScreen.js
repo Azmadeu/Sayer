@@ -17,11 +17,13 @@ class Footer extends Component {
   onPress = () => {
     const { addComment, id, onClick } = this.props;
 
-    onClick(this.state.comment);
+    if (this.state.comment) {
+      onClick(this.state.comment);
 
-    addComment(id, this.state.comment);
+      addComment(id, this.state.comment);
 
-    this.setState({ comment: '' });
+      this.setState({ comment: '' });
+    }
   };
 
   render() {
