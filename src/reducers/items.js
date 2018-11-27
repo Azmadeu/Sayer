@@ -46,15 +46,17 @@ const itemsData = (state = initialState, action) => {
       return nextState;
     }
     case UPDATE_COMMENT: {
-      const newState = JSON.parse(JSON.stringify(state));
+      const nextState = JSON.parse(JSON.stringify(state));
 
-      newState.forEach((item, i) => {
+      nextState.forEach((item, i) => {
         if (item.id === action.id) {
-          newState[i].comments.push(action.comment)
+          nextState[i].comments.push(action.comment)
         }
       });
 
-      return newState;
+      AsyncStorage.setItem('items', JSON.stringify(nextState));
+
+      return nextState;
     }
     default: {
       return state;

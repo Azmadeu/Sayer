@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, AsyncStorage } from 'react-native';
 import { Header } from '../components/header'
 import { SAYER_HOME } from '../routes';
 import { connect } from 'react-redux';
-import { addComment } from '../actions';
+import { addComment, getData } from '../actions';
 
 class Footer extends Component {
   state = {
+
     comment: ''
   };
 
@@ -17,7 +18,11 @@ class Footer extends Component {
   onPress = () => {
     const { addComment, id } = this.props;
 
-    addComment(this.state.comment, id)
+
+    addComment(id, this.state.comment);
+
+    AsyncStorage.getItem('items')
+      .then(res => this.props.getData(res))
   };
 
   render() {
@@ -42,8 +47,21 @@ class Footer extends Component {
 }
 
 class SayerComment extends Component {
+  state: {
+    comments: [],
+    text: ''
+  };
+
+  onChange = text => {
+    this.setState({ text })
+  };
+
+  onPress = () => {
+    this.setState({ comments: [...this.state.comments, ] })
+  };
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, addComment, getData } = this.props;
 
     const item = navigation.getParam('item');
 
@@ -74,6 +92,8 @@ class SayerComment extends Component {
           </ScrollView>
         </View>
         <Footer
+          getData={getData}
+          addComment={addComment}
           id={item.id}
         />
       </View>
@@ -82,7 +102,8 @@ class SayerComment extends Component {
 }
 
 const mapDispatchToProps = {
-  addComment
+  addComment,
+  getData
 };
 
 export default CommentScreen = connect(null, mapDispatchToProps)(SayerComment);
