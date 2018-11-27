@@ -3,29 +3,66 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 export const Header = props => {
 
-  const { navigation, title, touchable, route, description } = props;
+  const { navigation, title, route, description } = props;
+
+  const Home = route !== 'SAYER_HOME';
 
   return (
     <View style={styles.header}>
-      <View style={styles.headerContent}>
+      <View style={styles[route]}>
         {
-          touchable &&
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate(route)}
-            >
-              <Text style={styles.buttonText}>&#x2190;</Text>
-            </TouchableOpacity>
-            // :
-            // <Text>{description}</Text>
+          !Home &&
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate(route)}
+          >
+            <Text style={styles.buttonText}>
+              &#x2190;
+            </Text>
+          </TouchableOpacity>
         }
-        <Text style={styles.text}>{title}</Text>
+        <View>
+          <Text style={Home ? styles.mainTitle : styles.text}>
+            {title}
+          </Text>
+          {
+            Home &&
+            <Text style={styles.description}>
+              {description}
+            </Text>
+          }
+        </View>
       </View>
     </View>
   )
 };
 
 const styles = StyleSheet.create({
+  SAYER_HOME: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 15
+  },
+  SAYER_COMMENT: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingBottom: 15,
+  },
+  SAYER_ITEM_CREATE: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingBottom: 15,
+  },
+  mainTitle: {
+    color: '#fff',
+    marginLeft: 15,
+    fontSize: 40
+  },
+  description: {
+    color: '#fff',
+    fontSize: 15,
+    marginLeft: 15
+  },
   header: {
     height: 110,
     flexDirection: 'row',
@@ -41,7 +78,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#fff',
     marginLeft: 15,
-    fontSize: 30
+    fontSize: 28
   },
   button: {
     paddingBottom: 12,
