@@ -97,10 +97,25 @@ const itemsData = (state = initialState, action) => {
       return state;
     }
     case ADD_ITEM: {
-      return state;
+      return [
+        ...state,
+        {
+          id: generateId(),
+          title: action.title,
+          comments: []
+        }
+      ]
     }
     case DELETE_ITEM: {
-      return state;
+      const newState = JSON.parse(JSON.stringify(state));
+
+      newState.forEach((item, i) => {
+        if (item.id === action.id) {
+          newState.splice(i, 1)
+        }
+      });
+
+      return newState;
     }
     case UPDATE_COMMENT: {
       return state;

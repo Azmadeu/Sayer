@@ -47,11 +47,7 @@ class SayerItemCreate extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     items: state.itemsData
-//   };
-// };
+// const mapStateToProps = state => {};
 
 // const mapDispatchToProps = {};
 
