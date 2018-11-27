@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, AsyncS
 import { Header } from '../components/header'
 import { SAYER_HOME } from '../routes';
 import { connect } from 'react-redux';
-import { addComment, getData } from '../actions';
+import { addComment} from '../actions';
 
 class Footer extends Component {
   state = {
@@ -21,17 +21,16 @@ class Footer extends Component {
 
     addComment(id, this.state.comment);
 
-    AsyncStorage.getItem('items')
-      .then(res => this.props.getData(res))
+    this.setState({ comment: '' });
   };
 
   render() {
-
     return (
       <View style={styles.inputContainer}>
         <TextInput
           placeholder='Write a comment...'
           onChangeText={this.onChange}
+          value={this.state.comment}
           style={styles.inputText}
         />
         <TouchableOpacity
@@ -49,11 +48,15 @@ class Footer extends Component {
 
 class SayerComment extends Component {
   state = {
-    comments: this.props.navigation('item').comments,
+    comments: this.props.navigation.getParam('item').comments
   };
 
   onClick = text => {
-    this.setState({ comments: [...this.state.comments, text] })
+    const comments = [...this.state.comments];
+
+    comments.push(text);
+
+    this.setState({ comments })
   };
 
   render() {
@@ -99,8 +102,7 @@ class SayerComment extends Component {
 }
 
 const mapDispatchToProps = {
-  addComment,
-  getData
+  addComment
 };
 
 export default CommentScreen = connect(null, mapDispatchToProps)(SayerComment);
