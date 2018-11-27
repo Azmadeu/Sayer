@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'left',
     width: '80%',
-    color: '#44759D',
+    color: '#44359D',
   },
   commentsNumber: {
     textAlign: 'right',

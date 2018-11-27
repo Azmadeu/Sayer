@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Header } from '../components/header';
 import { SAYER_HOME } from '../routes';
+import { connect } from "react-redux";
 
-export default class ItemCreatingScreen extends Component {
+class SayerItemCreate extends Component {
   state = {
     title: 'Create new item',
+    newItemTitle: ''
+  };
+
+  onChange = e => {
+    this.setState({ newItemTitle: e.target.value })
+  };
+
+  onClick = () => {
+
   };
 
   render() {
@@ -17,7 +27,66 @@ export default class ItemCreatingScreen extends Component {
           navigation={this.props.navigation}
           route={SAYER_HOME}
         />
+        <View style={styles.createItemContainer}>
+          <TextInput
+            placeholder='New item title...'
+            style={styles.itemCreatorInput}
+            onChange={this.onChange}
+          />
+          <TouchableOpacity
+            style={styles.button}
+            onClick={this.onClick}
+          >
+            <Text style={styles.buttonText}>
+              >
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 }
+
+// const mapStateToProps = (state) => {
+//   return {
+//     items: state.itemsData
+//   };
+// };
+
+// const mapDispatchToProps = {};
+
+export default ItemCreatingScreen = connect(null, null)(SayerItemCreate);
+
+const styles = StyleSheet.create({
+  createItemContainer: {
+    flexDirection: 'row',
+    marginTop: 10
+  },
+  itemCreatorInput: {
+    marginLeft: 10,
+    width: '78%',
+    fontSize: 22,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#555',
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+  },
+  button: {
+    paddingBottom: 12,
+    marginTop: 10,
+    marginLeft: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    backgroundColor: '#40059D',
+    width: 47.5,
+    height: 47.5,
+  },
+  buttonText: {
+    marginTop: 8,
+    fontSize: 35,
+    color: '#fff'
+  }
+});

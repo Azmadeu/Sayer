@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { View, StyleSheet } from 'react-native';
 import HomeScreen from './src/screens/homeScreen';
 import CommentScreen from './src/screens/commentScreen';
 import { Provider } from 'react-redux';
@@ -29,8 +30,16 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer />
+        <View style={styles.App}>
+          <AppContainer />
+        </View>
       </Provider>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  App: {
+    flex: 1
+  }
+});

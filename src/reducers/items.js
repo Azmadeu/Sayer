@@ -13,6 +13,64 @@ const initialState = [
     title: 'First item for testing App First item for testing App First item for testing App',
     comments: [
       'My first comment!',
+      'My first comment!',
+      'My first comment!',
+      'My first comment!',
+      'My first comment!',
+      'My first comment!',
+      'My first comment!',
+      'My first comment!',
+      'My first comment!',
+      'My first comment!',
+      'My first comment!',
+      'My first comment!',
+      'My first comment!',
+      'My second comment, lol:D'
+    ]
+  },
+  {
+    id: generateId(),
+    title: 'Second item for testing App',
+    comments: [
+      'My first comment for second item!',
+      'My second comment for second item, lol:d'
+    ]
+  },
+  {
+    id: generateId(),
+    title: 'item for testing',
+    comments: [
+      'My first comment for second item!',
+    ]
+  },
+  {
+    id: generateId(),
+    title: 'First item for testing App First item for testing App First item for testing App',
+    comments: [
+      'My first comment!',
+      'My second comment, lol:D'
+    ]
+  },
+  {
+    id: generateId(),
+    title: 'Second item for testing App',
+    comments: [
+      'My first comment for second item!',
+      'My second comment for second item, lol:d'
+    ]
+  },
+  {
+    id: generateId(),
+    title: 'item for testing',
+    comments: [
+      'My first comment for second item!',
+    ]
+  },
+  {
+    id: generateId(),
+    title: 'First item for testing App First item for testing App First item for testing App',
+    comments: [
+      'My first comment!',
       'My second comment, lol:D'
     ]
   },

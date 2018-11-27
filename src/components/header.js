@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    height: 110,
+    height: 95,
     flexDirection: 'row',
     backgroundColor: '#2a006a',
     justifyContent: 'flex-start',
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
-    backgroundColor: '#44059D',
+    backgroundColor: '#40059D',
     width: 35,
     height: 35,
   },
