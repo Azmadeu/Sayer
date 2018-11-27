@@ -10,6 +10,8 @@
     "asap": "^2.0.6",
     "react": "16.6.1",
     "react-native": "0.57.5",
+    "react-native-gesture-handler": "^1.0.9",
+    "react-navigation": "^3.0.0",
     "redux-form": "^7.4.2"
   },
   "devDependencies": {

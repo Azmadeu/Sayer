@@ -1,0 +1,3 @@
+export const SAYER_HOME = 'SAYER_HOME';
+export const SAYER_COMMENT = 'SAYER_COMMENT';
+export const SAYER_ITEM_CREATE = 'SAYER_ITEM_CREATE';
